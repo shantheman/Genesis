@@ -24,7 +24,7 @@ else {client=supabase.createClient(config.url,config.publishableKey,{auth:{flowT
  $('show-support').onclick=()=>{generation++;$('report').hidden=true;$('support').hidden=false;support.load();};
  $('show-pnl').onclick=()=>{support.clear();$('support').hidden=true;load();};
  $('google').onclick=async()=>{const {error}=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:new URL('./',location.href).href}});if(error)$('status').textContent=error.message;};
- $('logout').onclick=async()=>{signedIn=false;clear();const {error}=await client.auth.signOut();$('status').textContent=error?.message||'';};
+ $('logout').onclick=async()=>{signedIn=false;clear();const {error}=await client.auth.signOut({scope:'local'});$('status').textContent=error?.message||'';};
  client.auth.onAuthStateChange((event,session)=>{signedIn=!!session;clear();$('login').hidden=!!session; $('logout').hidden=!session;if(session)setTimeout(load,0);});
  $('refresh').onclick=load; $('month').onchange=load;
 }
